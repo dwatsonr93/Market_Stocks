@@ -8,11 +8,14 @@ final class StocksViewModel: ObservableObject {
     private let stockService: StockServiceProtocol
     private let stockStorage: StockStorageProtocol
 
+    private var timer: Timer?
+
     init(service: StockServiceProtocol, storage: StockStorageProtocol) {
         self.stockService = service
         self.stockStorage = storage
         loadFromStorage()
         fetchStocks()
+        startPolling()
     }
 
     func fetchStocks() {
@@ -35,5 +38,18 @@ final class StocksViewModel: ObservableObject {
 
     func isFavorite(_ stock: StockEntity) -> Bool {
         stockStorage.isFavorite(ticker: stock.ticker ?? "")
+    }
+
+    private func startPolling() {
+        timer?.invalidate()
+        timer = Timer.scheduledTimer(withTimeInterval: 30.0, repeats: true) { [weak self] _ in
+            Task { @MainActor in
+                self?.fetchStocks()
+            }
+        }
+    }
+
+    deinit {
+        timer?.invalidate()
     }
 }
