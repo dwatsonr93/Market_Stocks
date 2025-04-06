@@ -11,7 +11,7 @@ struct StockRowView: View {
                     .font(.headline)
                 Text(stock.ticker ?? "")
                     .font(.subheadline)
-                    .foregroundColor(.secondary)
+                    .foregroundColor(Color("CxSecondary"))
             }
 
             Spacer()
