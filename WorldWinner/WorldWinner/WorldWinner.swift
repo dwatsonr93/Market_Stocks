@@ -7,7 +7,7 @@ struct WorldWinner: App {
     var body: some Scene {
         WindowGroup {
             MainTabView()
-                .environmentObject(dependencies)
+                .environmentObject(dependencies) //injecting AppDependencies container into the environment.
         }
     }
 }

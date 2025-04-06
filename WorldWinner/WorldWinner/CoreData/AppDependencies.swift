@@ -1,5 +1,6 @@
 import Foundation
 
+//Dependency container injected into the SwiftUI environment.
 final class AppDependencies: ObservableObject {
     let stockService: StockServiceProtocol
     let stockStorage: StockStorageProtocol
